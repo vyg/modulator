@@ -1,91 +1,87 @@
 <?php
 
-class PageModule extends DataObject {
-	
-	public static $label = "Page module";
-	public static $icon = "modulator/images/module-hero.png";
-	public static $description = "The base class for all module types. You should override this description.";
+class PageModule extends DataObject
+{
+    public static $label = 'Page module';
+    public static $icon = 'modulator/images/module-hero.png';
+    public static $description = 'The base class for all module types. You should override this description.';
 
-	private static $db = array(
-		"Title"			=>	"Varchar(128)",
-		"ExtraClasses"	=>	"Varchar(128)",
-		"Order"			=>	"Int"
-	);
-                             
-                             
-	private static $has_one = array(
-        "Page"	=>  "ModularPage"
+    private static $db = array(
+        'Title' => 'Varchar(128)',
+        'ExtraClasses' => 'Varchar(128)',
+        'Order' => 'Int',
     );
 
-    private static $default_sort = "Order";
+    private static $has_one = array(
+        'Page' => 'ModularPage',
+    );
+
+    private static $default_sort = 'Order';
 
     private static $extensions = array(
-        "VersionedDataObject"
+        'VersionedDataObject',
     );
 
-	/**
-	 * @return FieldList
-	 */
-    public function getCMSFields() {
+    /**
+     * @return FieldList
+     */
+    public function getCMSFields()
+    {
 
-    	// The new module state
-    	if($this->ID == 0) {
+        // The new module state
+        if ($this->ID == 0) {
+            Requirements::css(MODULATOR_PATH.'/css/PageModule.css');
+            Requirements::javascript(MODULATOR_PATH.'/javascript/PageModule.js');
 
-    		Requirements::css(MODULATOR_PATH . '/css/PageModule.css');
-    		Requirements::javascript(MODULATOR_PATH . '/javascript/PageModule.js');
+            $classes = ClassInfo::subclassesFor('PageModule');
 
-    		$classes = ClassInfo::subclassesFor("PageModule");
+            // Don't let them choose the base class
+            unset($classes['PageModule']);
 
-    		// Don't let them choose the base class
-    		unset($classes["PageModule"]);
+            $classList = array();
 
-    		$classList = array();
+            foreach ($classes as $class) {
+                $instance = new $class();
 
-    		foreach ($classes as $class) {
-    			$instance = new $class();
+                $classList[$class] = '<img src="'.$instance::$icon.'"><strong>'.$class::$label.'</strong><p>'.$class::$description.'</p>';
+            }
 
-    			$classList[$class] = '<img src="' . $instance::$icon . '"><strong>' . $class::$label . '</strong><p>' . $class::$description . '</p>';
-    		}
+            $labelField = new TextField('Title', 'Label');
+            $labelField->setDescription('A reference name for this block, not displayed on the website');
 
-    		$labelField = new TextField("Title", "Label");
-    		$labelField->setDescription("A reference name for this block, not displayed on the website");
+            $typeField = new OptionSetField('NewClassName', 'Type', $classList);
+            $typeField->setDescription('The type of module determines what content and functionality it will provide');
 
-    		$typeField = new OptionSetField("NewClassName", "Type", $classList);
-    		$typeField->setDescription("The type of module determines what content and functionality it will provide");
+            $fields = new FieldList(
+                $labelField,
+                $typeField
+            );
+        } else {
+            $fields = parent::getCMSFields();
 
-			$fields = new FieldList(
-				$labelField,
-	        	$typeField    
-	        );
+            // Don't expose Order to the CMS
+            $fields->removeFieldFromTab('Root.Main', 'Order');
+        }
 
-    	}
-    	else {
+        $this->extend('updateCMSFields', $fields);
 
-    		$fields = parent::getCMSFields();
-
-    		// Don't expose Order to the CMS
-    		$fields->removeFieldFromTab("Root.Main", "Order");
-    	}
-
-    	$this->extend("updateCMSFields", $fields);
-
-    	return $fields;
+        return $fields;
     }
 
     /**
-     * @return String
+     * @return string
      */
-    public function Content() {
-
-    	return $this->renderWith(array($this->ClassName, "PageModule"));
+    public function Content()
+    {
+        return $this->renderWith(array($this->ClassName, 'PageModule'));
     }
 
     /**
      * Where the magic happens. Convert the module from the default base class to the chosen type.
      */
-    public function onBeforeWrite() {
-
-        if($this->ClassName == "PageModule" && $this->ID == 0) {
+    public function onBeforeWrite()
+    {
+        if ($this->ClassName == 'PageModule' && $this->ID == 0) {
             $instance = $this->newClassInstance($this->NewClassName);
             $this->ClassName = $this->NewClassName;
         }
@@ -97,8 +93,8 @@ class PageModule extends DataObject {
      * Hook to supply module text content to the parent page element for indexing in searches.
      * Override in sub-class.
      */
-    public function populateSearchBody() {
-
-        return "";
+    public function populateSearchBody()
+    {
+        return '';
     }
 }

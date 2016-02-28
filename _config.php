@@ -1,3 +1,3 @@
 <?php
 
-define("MODULATOR_PATH", "modulator");
+define('MODULATOR_PATH', 'modulator');
