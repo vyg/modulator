@@ -1,6 +1,6 @@
 <?php
 
-class GridFieldModuleColumns implements GridField_HTMLProvider, GridField_ColumnProvider
+class GridFieldModuleColumns extends GridFieldDataColumns implements GridField_HTMLProvider
 {
     /*
      * GridField_HTMLProvider
@@ -15,10 +15,6 @@ class GridFieldModuleColumns implements GridField_HTMLProvider, GridField_Column
      */
     public function augmentColumns($gridField, &$columns)
     {
-        if (!in_array('Published', $columns)) {
-            array_unshift($columns, 'Published');
-        }
-
         if (!in_array('Icon', $columns)) {
             array_unshift($columns, 'Icon');
         }
@@ -26,7 +22,7 @@ class GridFieldModuleColumns implements GridField_HTMLProvider, GridField_Column
 
     public function getColumnsHandled($gridField)
     {
-        return array('Icon', 'Published');
+        return array('Icon', 'Summary');
     }
 
     public function getColumnContent($gridField, $record, $columnName)
@@ -35,8 +31,8 @@ class GridFieldModuleColumns implements GridField_HTMLProvider, GridField_Column
             case 'Icon':
                 return '<img src="'.$record::$icon.'">';
 
-            case 'Published':
-                return '<strong>Yes</strong><br>27/02/2016 07:06pm';
+            case 'Summary':
+                return '<strong>'.$record->Title.'</strong><br>'.$record->getSummaryContent();
         }
     }
 
@@ -49,11 +45,8 @@ class GridFieldModuleColumns implements GridField_HTMLProvider, GridField_Column
                     'width' => '64',
                 );
 
-            case 'Published':
-                return array(
-                    'class' => 'col-published',
-                    'width' => '100',
-                );
+            default:
+                return array();
         }
     }
 
@@ -62,13 +55,11 @@ class GridFieldModuleColumns implements GridField_HTMLProvider, GridField_Column
         switch ($columnName) {
             case 'Icon':
                 return array(
-                    'title' => '',
+                    'title' => 'Type',
                 );
 
-            case 'Published':
-                return array(
-                    'title' => 'Published',
-                );
+            default:
+                return array();
         }
     }
 }

@@ -8,7 +8,6 @@ class GridFieldConfig_ModuleEditor extends GridFieldConfig
 
         $this->addComponent(new GridFieldButtonRow('before'));
         $this->addComponent(new GridFieldAddNewButton('buttons-before-left'));
-        $this->addComponent(new GridFieldPublishAllModulesButton());
         $this->addComponent(new GridFieldToolbarHeader());
         $this->addComponent($sort = new GridFieldSortableHeader());
         $this->addComponent($filter = new GridFieldFilterHeader());
@@ -16,7 +15,7 @@ class GridFieldConfig_ModuleEditor extends GridFieldConfig
         $this->addComponent(new GridFieldDataColumns());
         $this->addComponent(new GridFieldEditButton());
         $this->addComponent(new GridFieldDeleteAction());
-        $this->addComponent(new VersionedDataObjectDetailsForm());
+        $this->addComponent(new PageModuleVersionedDataObjectDetailsForm());
         $this->addComponent(new GridFieldOrderableRows('Order'));
 
         $sort->setThrowExceptionOnBadDataType(false);

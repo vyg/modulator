@@ -42,6 +42,18 @@ class HeroModule extends PageModule {
   private static $db = array(
     "Heading" => "Varchar(128)"
   );
+
+  // Provide custom summary content for the gridfield
+  public function getSummaryContent()
+  {
+      return $this->Heading;
+  }
+
+  // Provide text content from the module to be included in the pages's search index
+  public function getSearchBody()
+  {
+      return $this->Heading;
+  }
 }
 ```
 

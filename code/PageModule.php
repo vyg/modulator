@@ -3,13 +3,14 @@
 class PageModule extends DataObject
 {
     public static $label = 'Page module';
-    public static $icon = 'modulator/images/module-hero.png';
+    public static $icon = 'modulator/images/module-generic.png';
     public static $description = 'The base class for all module types. You should override this description.';
 
     private static $db = array(
         'Title' => 'Varchar(128)',
         'ExtraClasses' => 'Varchar(128)',
         'Order' => 'Int',
+        'Active' => 'Boolean',
     );
 
     private static $has_one = array(
@@ -22,14 +23,19 @@ class PageModule extends DataObject
         'VersionedDataObject',
     );
 
+    private static $summary_fields = array(
+        'Summary' => 'Summary',
+    );
+
+    private static $searchable_fields = array();
+
     /**
      * @return FieldList
      */
     public function getCMSFields()
     {
-
-        // The new module state
         if ($this->ID == 0) {
+            // The new module state
             Requirements::css(MODULATOR_PATH.'/css/PageModule.css');
             Requirements::javascript(MODULATOR_PATH.'/javascript/PageModule.js');
 
@@ -57,6 +63,7 @@ class PageModule extends DataObject
                 $typeField
             );
         } else {
+            // Existing module state
             $fields = parent::getCMSFields();
 
             // Don't expose Order to the CMS
@@ -92,8 +99,15 @@ class PageModule extends DataObject
     /**
      * Hook to supply module text content to the parent page element for indexing in searches.
      * Override in sub-class.
+     * 
+     * @return string
      */
-    public function populateSearchBody()
+    public function getSearchBody()
+    {
+        return '';
+    }
+
+    public function getSummaryContent()
     {
         return '';
     }
