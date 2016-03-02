@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class GridFieldModuleColumns
+ */
 class GridFieldModuleColumns extends GridFieldDataColumns implements GridField_HTMLProvider
 {
     /*
@@ -20,11 +23,17 @@ class GridFieldModuleColumns extends GridFieldDataColumns implements GridField_H
         }
     }
 
+    /**
+     * @return array
+     */
     public function getColumnsHandled($gridField)
     {
         return array('Icon', 'Summary');
     }
 
+    /**
+     * @return string
+     */
     public function getColumnContent($gridField, $record, $columnName)
     {
         switch ($columnName) {
@@ -36,6 +45,9 @@ class GridFieldModuleColumns extends GridFieldDataColumns implements GridField_H
         }
     }
 
+    /**
+     * @return array
+     */
     public function getColumnAttributes($gridField, $record, $columnName)
     {
         switch ($columnName) {
@@ -50,6 +62,9 @@ class GridFieldModuleColumns extends GridFieldDataColumns implements GridField_H
         }
     }
 
+    /**
+     * @return array
+     */
     public function getColumnMetadata($gridField, $columnName)
     {
         switch ($columnName) {

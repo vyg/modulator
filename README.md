@@ -7,6 +7,7 @@ Modulator is an extendable system for creating sub-page components. It achieves 
 * Draft and publish control on a per-module level
 * Drag-and-drop re-ordering of modules
 * An extendable system for creating your own modules
+* CMS previewing
 
 ## Installation
 

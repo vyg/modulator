@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class GridFieldConfig_ModuleEditor
+ */
 class GridFieldConfig_ModuleEditor extends GridFieldConfig
 {
     public function __construct()

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class ModularPage
+ */
 class ModularPage extends Page
 {
     private static $db = array(
@@ -9,6 +12,9 @@ class ModularPage extends Page
         'Modules' => 'PageModule',
     );
 
+    /**
+     * @return FieldList
+     */
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
@@ -34,7 +40,7 @@ class ModularPage extends Page
             $searchBody = '';
 
             foreach ($this->Modules() as $module) {
-                $searchBody .= $module->populateSearchBody().PHP_EOL;
+                $searchBody .= $module->getSearchBody().PHP_EOL;
             }
 
             $this->Content = $searchBody;
@@ -42,6 +48,12 @@ class ModularPage extends Page
 
         parent::onBeforeWrite();
     }
+
+    /**
+     * @return FieldList
+     */
+    /*
+    TODO: Publish all modules via primary button
 
     public function getCMSActions()
     {
@@ -69,10 +81,17 @@ class ModularPage extends Page
 
         return $actions;
     }
+    */
 }
 
+/**
+ * Class ModularPage_Controller
+ */
 class ModularPage_Controller extends Page_Controller
 {
+    /**
+     * return ArrayList
+     */
     public function ActiveModules()
     {
         $modules = $this->Modules();
@@ -83,6 +102,8 @@ class ModularPage_Controller extends Page_Controller
     /**
      * Override the $Content template variable so its never used.
      * Content should come from <% loop $ActiveModules %>.
+     *
+     * @return string
      */
     public function Content()
     {

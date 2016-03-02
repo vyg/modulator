@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class PageModule
+ */
 class PageModule extends DataObject
 {
     public static $label = 'Page module';
@@ -107,6 +110,9 @@ class PageModule extends DataObject
         return '';
     }
 
+    /**
+     * @return string
+     */
     public function getSummaryContent()
     {
         return '';
