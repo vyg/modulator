@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class ModularPage
+ * Class ModularPage.
  */
 class ModularPage extends Page
 {
@@ -49,7 +49,7 @@ class ModularPage extends Page
         parent::onBeforeWrite();
     }
 
-    /**
+    /*
      * @return FieldList
      */
     /*
@@ -85,15 +85,20 @@ class ModularPage extends Page
 }
 
 /**
- * Class ModularPage_Controller
+ * Class ModularPage_Controller.
  */
 class ModularPage_Controller extends Page_Controller
 {
     /**
-     * return ArrayList
+     * return ArrayList.
      */
     public function ActiveModules()
     {
+        // If the CMS has asked to focus on 1 module for a preview, just show that.
+        if ($this->request->getVar('moduleFocus')) {
+            return $this->Modules()->filter('ID', $this->request->getVar('moduleFocus'));
+        }
+
         $modules = $this->Modules();
 
         return $modules;

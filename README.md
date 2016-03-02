@@ -64,6 +64,16 @@ Next create a template file. It should have the same name as your module class.
 </header>
 ```
 
+If you want to extend the ``ModularPage`` template, you can render the modules by hand using the ``$ActiveModules`` loop.
+
+```html
+<% loop $ActiveModules %>
+<section class="$ClassName.Lowercase <% if $Odd %>odd<% else %>even<% end_if %> order-$Order $ExtraClasses">
+  $Content
+</section>
+<% end_loop %>
+```
+
 ## Testing
 
 Coming soon.

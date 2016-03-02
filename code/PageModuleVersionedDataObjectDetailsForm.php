@@ -19,7 +19,7 @@ class PageModuleVersionedDataObjectDetailsForm_ItemRequest extends VersionedData
     );
 
     /**
-     * Additional magic happens here. Trick LeftAndMain into thinking we're a previewable SiteTree object
+     * Additional magic happens here. Trick LeftAndMain into thinking we're a previewable SiteTree object.
      * 
      * @return Form
      */
@@ -49,6 +49,7 @@ class PageModuleVersionedDataObjectDetailsForm_ItemRequest extends VersionedData
         $navField->setAllowHTML(true);
 
         $fields = $form->Fields();
+
         $fields->push($navField);
 
         return $form;

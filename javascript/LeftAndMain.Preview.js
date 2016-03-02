@@ -13,6 +13,18 @@
 				this._super();
 			},
 
+			_loadUrl: function(url) {
+
+				var moduleId = $('input[name=ModulatorID]');
+
+				if(moduleId.length) {
+					url += '&moduleFocus=' + moduleId.val();
+				}
+
+				this.find('iframe').addClass('loading').attr('src', url);
+				return this;
+			}
+
 		});
 
 	});

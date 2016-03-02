@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class GridFieldModuleColumns
+ * Class GridFieldModuleColumns.
  */
 class GridFieldModuleColumns extends GridFieldDataColumns implements GridField_HTMLProvider
 {

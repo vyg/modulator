@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class GridFieldConfig_ModuleEditor
+ * Class GridFieldConfig_ModuleEditor.
  */
 class GridFieldConfig_ModuleEditor extends GridFieldConfig
 {

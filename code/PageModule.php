@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class PageModule
+ * Class PageModule.
  */
 class PageModule extends DataObject
 {
@@ -12,7 +12,7 @@ class PageModule extends DataObject
     private static $db = array(
         'Title' => 'Varchar(128)',
         'ExtraClasses' => 'Varchar(128)',
-        'Order' => 'Int'
+        'Order' => 'Int',
     );
 
     private static $has_one = array(
@@ -70,6 +70,9 @@ class PageModule extends DataObject
 
             // Don't expose Order to the CMS
             $fields->removeFieldFromTab('Root.Main', 'Order');
+
+            // Helps us keep track of preview focus
+            $fields->addFieldToTab('Root.Main', new HiddenField('ModulatorID', 'ModulatorID', $this->ID));
         }
 
         $this->extend('updateCMSFields', $fields);
