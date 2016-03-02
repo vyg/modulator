@@ -12,8 +12,7 @@ class PageModule extends DataObject
     private static $db = array(
         'Title' => 'Varchar(128)',
         'ExtraClasses' => 'Varchar(128)',
-        'Order' => 'Int',
-        'Active' => 'Boolean',
+        'Order' => 'Int'
     );
 
     private static $has_one = array(
