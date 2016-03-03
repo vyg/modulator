@@ -70,6 +70,7 @@ class PageModule extends DataObject
 
             // Don't expose Order to the CMS
             $fields->removeFieldFromTab('Root.Main', 'Order');
+            $fields->removeFieldFromTab('Root.Main', 'PageID');
 
             // Helps us keep track of preview focus
             $fields->addFieldToTab('Root.Main', new HiddenField('ModulatorID', 'ModulatorID', $this->ID));
