@@ -94,7 +94,7 @@ class PageModule extends DataObject
      */
     public function onBeforeWrite()
     {
-        if ($this->ClassName == 'PageModule' && $this->ID == 0) {
+        if ($this->ClassName == 'PageModule' && $this->ID == 0 && !empty($this->NewClassName)) {
             $instance = $this->newClassInstance($this->NewClassName);
             $this->ClassName = $this->NewClassName;
         }
