@@ -76,5 +76,5 @@ If you want to extend the ``ModularPage`` template, you can render the modules b
 
 ## Testing
 
-Coming soon.
+Run ``phpunit`` from within the module folder, or /dev/tests from the browser.
 
