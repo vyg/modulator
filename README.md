@@ -13,7 +13,7 @@ Modulator is an extendable system for creating sub-page components. It achieves 
 
 Modulator can be installed via Composer;
 
-    composer require "touchcast/silverstripe-modulator" "dev-master"
+    composer require touchcast/modulator dev-master
 
 After installing, run a ``/dev/build`` to generate the database tables.
 
