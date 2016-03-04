@@ -1,5 +1,5 @@
 {
-  "name": "touchcast/silverstripe-modulator",
+  "name": "touchcast/modulator",
   "description": "A SilverStripe module for dynamically creating pages from smaller components",
   "type": "silverstripe-module",
   "authors": [
