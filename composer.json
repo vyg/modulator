@@ -11,7 +11,9 @@
   "require": {
     "composer/installers": "~1.0",
     "silverstripe-australia/gridfieldextensions": "1.3.0",
-    "heyday/silverstripe-versioneddataobjects": "1.4.0"
+    "heyday/silverstripe-versioneddataobjects": "1.4.0",
+    "silverstripe/framework": "~3.0",
+    "silverstripe/cms": "~3.0"
   },
   "require-dev": {
       "phpunit/phpunit": "~3.7"
