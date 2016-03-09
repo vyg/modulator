@@ -1,5 +1,9 @@
 # SilverStripe Modulator
 
+[![Travis](https://img.shields.io/travis/touchcast/modulator.svg)](https://travis-ci.org/touchcast/modulator)
+[![Packagist](https://img.shields.io/packagist/v/touchcast/modulator.svg)](https://packagist.org/packages/touchcast/modulator)
+[![Packagist](https://img.shields.io/packagist/dt/touchcast/modulator.svg)](https://packagist.org/packages/touchcast/modulator)
+
 Modulator is an extendable system for creating sub-page components. It achieves this by attaching DataObjects to the page in place of the traditional Content body.
 
 ## Features
