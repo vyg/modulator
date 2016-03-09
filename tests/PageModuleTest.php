@@ -31,8 +31,8 @@ class PageModuleTest extends SapphireTest
      */
     public function testCreateNewModule()
     {
-        class HeroModule extends PageModule {};
-        
+        $mock = $this->getMockBuilder('HeroModule');
+
         $module = new PageModule();
 
         $module->NewClassName = 'HeroModule';
