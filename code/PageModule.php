@@ -31,7 +31,8 @@ class PageModule extends DataObject
 
     private static $searchable_fields = array();
 
-    public function getCMSValidator() {
+    public function getCMSValidator()
+    {
         return new RequiredFields('Title', 'Type');
     }
 
@@ -60,12 +61,11 @@ class PageModule extends DataObject
 
             $fields = new FieldList();
 
-            if(!count($classes)) {
+            if (!count($classes)) {
                 $typeField = new LiteralField('Type', '<span class="message required">There are no module types defined, please create some.</span>');
 
                 $fields->push($typeField);
-            }
-            else {
+            } else {
                 $labelField = new TextField('Title', 'Label');
                 $labelField->setDescription('A reference name for this block, not displayed on the website');
                 $fields->push($labelField);

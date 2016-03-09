@@ -42,8 +42,9 @@ class PageModuleVersionedDataObjectDetailsForm_ItemRequest extends VersionedData
             $classes = ClassInfo::subclassesFor('PageModule');
             unset($classes['PageModule']);
 
-            if(!count($classes))
+            if (!count($classes)) {
                 $actions->removeByName('action_save');
+            }
         }
 
         // Enable CMS preview
