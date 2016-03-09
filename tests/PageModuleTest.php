@@ -1,5 +1,9 @@
 <?php
 
+class HeroModule extends PageModule
+{
+}
+
 class PageModuleTest extends SapphireTest
 {
     protected static $fixture_file = 'PageModuleTest.yml';
@@ -31,8 +35,6 @@ class PageModuleTest extends SapphireTest
      */
     public function testCreateNewModule()
     {
-        $mock = $this->getMockBuilder('HeroModule');
-
         $module = new PageModule();
 
         $module->NewClassName = 'HeroModule';
