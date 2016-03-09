@@ -31,6 +31,10 @@ class PageModule extends DataObject
 
     private static $searchable_fields = array();
 
+    public function getCMSValidator() {
+        return new RequiredFields('Title', 'Type');
+    }
+
     /**
      * @return FieldList
      */
@@ -54,16 +58,22 @@ class PageModule extends DataObject
                 $classList[$class] = '<img src="'.$instance::$icon.'"><strong>'.$class::$label.'</strong><p>'.$class::$description.'</p>';
             }
 
-            $labelField = new TextField('Title', 'Label');
-            $labelField->setDescription('A reference name for this block, not displayed on the website');
+            $fields = new FieldList();
 
-            $typeField = new OptionSetField('NewClassName', 'Type', $classList);
-            $typeField->setDescription('The type of module determines what content and functionality it will provide');
+            if(!count($classes)) {
+                $typeField = new LiteralField('Type', '<span class="message required">There are no module types defined, please create some.</span>');
 
-            $fields = new FieldList(
-                $labelField,
-                $typeField
-            );
+                $fields->push($typeField);
+            }
+            else {
+                $labelField = new TextField('Title', 'Label');
+                $labelField->setDescription('A reference name for this block, not displayed on the website');
+                $fields->push($labelField);
+
+                $typeField = new OptionSetField('NewClassName', 'Type', $classList);
+                $typeField->setDescription('The type of module determines what content and functionality it will provide');
+                $fields->push($typeField);
+            }
         } else {
             // Existing module state
             $fields = parent::getCMSFields();

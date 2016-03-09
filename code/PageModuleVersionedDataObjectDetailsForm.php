@@ -35,7 +35,15 @@ class PageModuleVersionedDataObjectDetailsForm_ItemRequest extends VersionedData
         if ($record->ID == 0) {
             $actions = $form->Actions();
 
+            // Remove the publish button on the pre-module state
             $actions->removeByName('action_publish');
+
+            // Remove the save action if there are no sub-classes to instantiate
+            $classes = ClassInfo::subclassesFor('PageModule');
+            unset($classes['PageModule']);
+
+            if(!count($classes))
+                $actions->removeByName('action_save');
         }
 
         // Enable CMS preview
