@@ -20,7 +20,7 @@ class ModularPage extends SiteTree
         $fields = parent::getCMSFields();
 
         // The SiteTree Content field is used to hold the search index, never displayed
-        $fields->removeFieldFromTab('Root.Main', 'Content');
+        $fields->replaceField('Content', LiteralField::create('Content', ''));
 
         $config = GridFieldConfig_ModuleEditor::create();
 

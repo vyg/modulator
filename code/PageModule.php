@@ -96,7 +96,7 @@ class PageModule extends DataObject
      */
     public function Content()
     {
-        return $this->renderWith(array($this->ClassName, 'PageModule'));
+        return $this->renderWith(array($this->ClassName));
     }
 
     /**
