@@ -109,12 +109,13 @@ class PageModule extends DataObject
             $this->ClassName = $this->NewClassName;
 
             // New modules should default to the bottom of the page
-            $lastModule = $this->Page()->Modules()->sort('Order DESC')->limit(1)->first();
+            $this->Order = 1;
 
-            if ($lastModule) {
-                $this->Order = $lastModule->Order + 1;
-            } else {
-                $this->Order = 1;
+            if($this->Page()->ID != 0) {
+                $lastModule = $this->Page()->Modules()->sort('Order DESC')->limit(1)->first();
+
+                if ($lastModule) 
+                    $this->Order = $lastModule->Order + 1;
             }
         }
 
