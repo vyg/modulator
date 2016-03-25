@@ -107,6 +107,15 @@ class PageModule extends DataObject
         if ($this->ClassName == 'PageModule' && $this->ID == 0 && !empty($this->NewClassName)) {
             $instance = $this->newClassInstance($this->NewClassName);
             $this->ClassName = $this->NewClassName;
+
+            // New modules should default to the bottom of the page
+            $lastModule = $this->Page()->Modules()->sort('Order DESC')->limit(1)->first();
+
+            if ($lastModule) {
+                $this->Order = $lastModule->Order + 1;
+            } else {
+                $this->Order = 1;
+            }
         }
 
         parent::onBeforeWrite();
