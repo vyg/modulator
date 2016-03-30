@@ -23,19 +23,18 @@ class ModularPage extends SiteTree
         $fields->replaceField('Content', LiteralField::create('Content', ''));
 
         // Modules can only be added to pages which exist
-        if($this->ID != 0) {
+        if ($this->ID != 0) {
             $config = GridFieldConfig_ModuleEditor::create();
 
             $gridField = new GridField('Modules', 'Content blocks', $this->Modules(), $config);
 
-            $fields->addFieldToTab('Root.Main', $gridField, 'Metadata');  
-        }
-        else {
+            $fields->addFieldToTab('Root.Main', $gridField, 'Metadata');
+        } else {
             $warningField = new LiteralField('Type', '<p class="message warning">You need to save this page before you can add modules to it.</p>');
 
-            $fields->addFieldToTab('Root.Main', $warningField, 'Metadata'); 
+            $fields->addFieldToTab('Root.Main', $warningField, 'Metadata');
         }
- 
+
         return $fields;
     }
 

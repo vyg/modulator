@@ -11,7 +11,6 @@ class PageModule extends DataObject
 
     private static $db = array(
         'Title' => 'Varchar(128)',
-        'ExtraClasses' => 'Varchar(128)',
         'Order' => 'Int',
     );
 
@@ -111,11 +110,12 @@ class PageModule extends DataObject
             // New modules should default to the bottom of the page
             $this->Order = 1;
 
-            if($this->Page()->ID != 0) {
+            if ($this->Page()->ID != 0) {
                 $lastModule = $this->Page()->Modules()->sort('Order DESC')->limit(1)->first();
 
-                if ($lastModule) 
+                if ($lastModule) {
                     $this->Order = $lastModule->Order + 1;
+                }
             }
         }
 

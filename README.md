@@ -35,7 +35,7 @@ Start by extending ``PageModule``
 class HeroModule extends PageModule {
 
   // Give the module a name for use within the CMS
-  public static $title = "Hero module";
+  public static $label = "Hero module";
 
   // Give it a description
   public static $description = "A large title section at the top of the page";
