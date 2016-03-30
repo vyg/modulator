@@ -72,7 +72,7 @@ If you want to extend the ``ModularPage`` template, you can render the modules b
 
 ```html
 <% loop $ActiveModules %>
-<section class="$ClassName.Lowercase <% if $Odd %>odd<% else %>even<% end_if %> order-$Order $ExtraClasses">
+<section class="$ClassName.Lowercase <% if $Odd %>odd<% else %>even<% end_if %> order-$Order">
   $Content
 </section>
 <% end_loop %>

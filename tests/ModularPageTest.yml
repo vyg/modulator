@@ -1,7 +1,6 @@
 PageModule:
   hero:
     Title: Hero module
-    ExtraClasses: bg-blue
     Order: 1
 
 ModularPage:
