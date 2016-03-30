@@ -12,6 +12,8 @@ class ModularPage extends SiteTree
         'Modules' => 'PageModule',
     );
 
+    public static $allowed_modules = array();
+
     /**
      * @return FieldList
      */
@@ -54,6 +56,30 @@ class ModularPage extends SiteTree
         }
 
         parent::onBeforeWrite();
+    }
+
+    /**
+     * Build the list of allowed modules for this page type.
+     * 
+     * @return array the list of class names to be used
+     */
+    public static function getAllowedModules()
+    {
+        $classes = ClassInfo::subclassesFor('PageModule');
+
+        // Don't let them choose the base class
+        unset($classes['PageModule']);
+
+        // Remove any classes not on the whitelist
+        if (count(static::$allowed_modules)) {
+            foreach ($classes as $class) {
+                if (!in_array($class, static::$allowed_modules)) {
+                    unset($classes[$class]);
+                }
+            }
+        }
+
+        return $classes;
     }
 
     /*

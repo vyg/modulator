@@ -1,5 +1,18 @@
 <?php
 
+class PageModuleSubclass1 extends PageModule
+{
+}
+
+class PageModuleSubclass2 extends PageModule
+{
+}
+
+class ModularPageSubclass extends ModularPage
+{
+    public static $allowed_modules = array('PageModuleSubclass1');
+}
+
 class ModularPageTest extends SapphireTest
 {
     protected static $fixture_file = 'ModularPageTest.yml';
@@ -36,5 +49,15 @@ class ModularPageTest extends SapphireTest
         foreach ($page->Modules() as $module) {
             $this->assertNotEmpty($module->Content());
         }
+    }
+
+    /**
+     * Test that pages can filter the list of modules allowed.
+     */
+    public function testAllowedModules()
+    {
+        $filteredPage = new ModularPageSubclass();
+
+        $this->assertEquals($filteredPage->getAllowedModules(), array('PageModuleSubclass1' => 'PageModuleSubclass1'));
     }
 }

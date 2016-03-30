@@ -41,18 +41,32 @@ class PageModule extends DataObject
     public function getCMSFields()
     {
         if ($this->ID == 0) {
+
             // The new module state
             Requirements::css(MODULATOR_PATH.'/css/PageModule.css');
             Requirements::javascript(MODULATOR_PATH.'/javascript/PageModule.js');
 
-            $classes = ClassInfo::subclassesFor('PageModule');
+            $allowedModules = array();
 
-            // Don't let them choose the base class
-            unset($classes['PageModule']);
+            // Determine the type of the parent page
+            $currentPageID = Session::get('CMSMain.currentPage');
+
+            if ($currentPageID) {
+                $currentPage = SiteTree::get_by_id('SiteTree', $currentPageID);
+
+                if ($currentPage) {
+                    $currentPageClass = $currentPage->ClassName;
+
+                    // Get the list of allowed modules for this page type
+                    if (class_exists($currentPageClass) && method_exists($currentPageClass, 'getAllowedModules')) {
+                        $allowedModules = $currentPageClass::getAllowedModules();
+                    }
+                }
+            }
 
             $classList = array();
 
-            foreach ($classes as $class) {
+            foreach ($allowedModules as $class) {
                 $instance = new $class();
 
                 $classList[$class] = '<img src="'.$instance::$icon.'"><strong>'.$class::$label.'</strong><p>'.$class::$description.'</p>';
@@ -60,7 +74,7 @@ class PageModule extends DataObject
 
             $fields = new FieldList();
 
-            if (!count($classes)) {
+            if (!count($allowedModules)) {
                 $typeField = new LiteralField('Type', '<span class="message required">There are no module types defined, please create some.</span>');
 
                 $fields->push($typeField);
