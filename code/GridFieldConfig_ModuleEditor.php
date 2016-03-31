@@ -19,7 +19,6 @@ class GridFieldConfig_ModuleEditor extends GridFieldConfig
         $this->addComponent(new GridFieldEditButton());
         $this->addComponent(new GridFieldDeleteAction());
         $this->addComponent(new PageModuleVersionedDataObjectDetailsForm());
-        $this->addComponent(new GridFieldOrderableRows('Order'));
 
         $sort->setThrowExceptionOnBadDataType(false);
         $filter->setThrowExceptionOnBadDataType(false);

@@ -28,6 +28,10 @@ class ModularPage extends SiteTree
         if ($this->ID != 0) {
             $config = GridFieldConfig_ModuleEditor::create();
 
+            if ($this->Modules()->Count()) {
+                $config->addComponent(new GridFieldOrderableRows('Order'));
+            }
+
             $gridField = new GridField('Modules', 'Content blocks', $this->Modules(), $config);
 
             $fields->addFieldToTab('Root.Main', $gridField, 'Metadata');

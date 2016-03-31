@@ -113,6 +113,16 @@ class PageModule extends DataObject
     }
 
     /**
+     * Gets the page link for the parent page.
+     * 
+     * @return string
+     */
+    public function Link()
+    {
+        return $this->Page()->Link();
+    }
+
+    /**
      * Where the magic happens. Convert the module from the default base class to the chosen type.
      */
     public function onBeforeWrite()
