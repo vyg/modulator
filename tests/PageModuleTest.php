@@ -1,6 +1,6 @@
 <?php
 
-class HeroModule extends PageModule
+class TestModule1 extends PageModule
 {
 }
 
@@ -37,9 +37,9 @@ class PageModuleTest extends SapphireTest
     {
         $module = new PageModule();
 
-        $module->NewClassName = 'HeroModule';
+        $module->NewClassName = 'TestModule1';
         $module->Write();
 
-        $this->assertEquals($module->ClassName, 'HeroModule');
+        $this->assertEquals($module->ClassName, 'TestModule1');
     }
 }
