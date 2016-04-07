@@ -3,7 +3,7 @@
 /**
  * Class ModularPage.
  */
-class ModularPage extends SiteTree
+class ModularPage extends Page
 {
     private static $db = array(
     );
@@ -124,7 +124,7 @@ class ModularPage extends SiteTree
 /**
  * Class ModularPage_Controller.
  */
-class ModularPage_Controller extends ContentController
+class ModularPage_Controller extends Page_Controller
 {
     /**
      * return ArrayList.
