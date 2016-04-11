@@ -1,3 +1,6 @@
 PageModule:
   extensions:
     - VersionedDataObject
+
+ModularPage:
+  base_class: PageModule

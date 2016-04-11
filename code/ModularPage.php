@@ -69,10 +69,25 @@ class ModularPage extends Page
      */
     public static function getAllowedModules()
     {
-        $classes = ClassInfo::subclassesFor('PageModule');
+        $pageClass = get_called_class();
+
+        // Allow an alternate module base class to be specified, per page type
+        $baseClass = Config::inst()->get($pageClass, 'base_class');
+
+        // If a custom config doesn't exist, check ModularPage
+        if (empty($baseClass)) {
+            $baseClass = Config::inst()->get('ModularPage', 'base_class');
+        }
+
+        // If no config exists, use defaults
+        if (empty($baseClass)) {
+            $baseClass = 'PageModule';
+        }
+
+        $classes = ClassInfo::subclassesFor($baseClass);
 
         // Don't let them choose the base class
-        unset($classes['PageModule']);
+        unset($classes[$baseClass]);
 
         // Remove any classes not on the whitelist
         if (count(static::$allowed_modules)) {
