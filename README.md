@@ -12,6 +12,7 @@ Modulator is an extendable system for creating sub-page components. It achieves 
 * Drag-and-drop re-ordering of modules
 * An extendable system for creating your own modules
 * CMS previewing
+* Filtering of available modules per page type
 
 ## Installation
 
@@ -76,6 +77,39 @@ If you want to extend the ``ModularPage`` template, you can render the modules b
   $Content
 </section>
 <% end_loop %>
+```
+
+## Filtering available modules
+
+For each page class you extend from ``ModularPage`` you can specify a list of modules which are allowed to be attached to that page. e.g;
+
+```php
+class CustomPage extends ModularPage {
+  
+  public static $allowed_modules = array(
+    'HeroModule',
+    'TextModule'
+  );
+}
+```
+
+## Custom base modules
+
+If you want to create a custom base class for page modules to contain any common fields, you can specifiy this in a config file;
+
+```yml
+ModularPage:
+  base_class: CustomModuleBase
+```
+
+You can take this a step further and specify a different base class for each page type (as an alternative to using ``$allowed_modules``);
+
+```yml
+ModularPage:
+  base_class: CustomModuleBase
+
+BlogPage:
+  base_class: BlogModuleBase
 ```
 
 ## Testing

@@ -5,13 +5,22 @@
  */
 class ModularPage extends Page
 {
+    /**
+     * @var array
+     */
     private static $db = array(
     );
 
+    /**
+     * @var array
+     */
     private static $has_many = array(
         'Modules' => 'PageModule',
     );
 
+    /**
+     * @var array
+     */
     public static $allowed_modules = array();
 
     /**
@@ -25,7 +34,7 @@ class ModularPage extends Page
         $fields->replaceField('Content', LiteralField::create('Content', ''));
 
         // Modules can only be added to pages which exist
-        if ($this->ID != 0) {
+        if ($this->exists()) {
             $config = GridFieldConfig_ModuleEditor::create();
 
             if ($this->Modules()->Count()) {
@@ -47,19 +56,25 @@ class ModularPage extends Page
     /**
      * Iterate through all the modules and add their content to the parent page, so it can be found in searches.
      */
-    public function onBeforeWrite()
+    public function onAfterWrite()
     {
-        if ($this->Modules()->Count()) {
-            $searchBody = '';
+        $classes = ClassInfo::subclassesFor(__CLASS__);
 
-            foreach ($this->Modules() as $module) {
-                $searchBody .= $module->getSearchBody().PHP_EOL;
+        // Only run this code if we're on a valid instance of this class.
+        // Fixes bug when changaing page type via the CMS (e.g. ModularPage -> Page)
+        if (in_array($this->ClassName, $classes)) {
+            if ($this->Modules()->Count()) {
+                $searchBody = '';
+
+                foreach ($this->Modules() as $module) {
+                    $searchBody .= $module->getSearchBody().PHP_EOL;
+                }
+
+                $this->Content = $searchBody;
             }
-
-            $this->Content = $searchBody;
         }
 
-        parent::onBeforeWrite();
+        parent::onAfterWrite();
     }
 
     /**
@@ -100,40 +115,6 @@ class ModularPage extends Page
 
         return $classes;
     }
-
-    /*
-     * @return FieldList
-     */
-    /*
-    TODO: Publish all modules via primary button
-
-    public function getCMSActions()
-    {
-        $actions = parent::getCMSActions();
-
-        foreach ($actions as $action) {
-            $firstAction = $action;
-            break;
-        }
-
-        if ($this->canPublish() && !$this->getIsDeletedFromStage()) {
-            // "publish", as with "save", it supports an alternate state to show when action is needed.
-            $firstAction->push(
-                $publish = FormAction::create('publishallmodules', _t('SiteTree.BUTTONPUBLISHEDALLMODULES', 'All modules published'))
-                    ->setAttribute('data-icon', 'accept')
-                    ->setAttribute('data-text-alternate', _t('SiteTree.BUTTONSAVEPUBLISHALLMODULES', 'Publish all modules'))
-            );
-
-            // Set up the initial state of the button to reflect the state of the underlying SiteTree object.
-            // $publish->addExtraClass('ss-ui-alternate');
-        }
-
-        // Hook for extensions to add/remove actions.
-        $this->extend('updateCMSActions', $actions);
-
-        return $actions;
-    }
-    */
 }
 
 /**
