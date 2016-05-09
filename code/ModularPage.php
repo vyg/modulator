@@ -56,7 +56,7 @@ class ModularPage extends Page
     /**
      * Iterate through all the modules and add their content to the parent page, so it can be found in searches.
      */
-    public function onAfterWrite()
+    public function onBeforeWrite()
     {
         $classes = ClassInfo::subclassesFor(__CLASS__);
 
@@ -74,7 +74,7 @@ class ModularPage extends Page
             }
         }
 
-        parent::onAfterWrite();
+        parent::onBeforeWrite();
     }
 
     /**
