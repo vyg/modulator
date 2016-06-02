@@ -32,7 +32,7 @@ class PageModuleVersionedDataObjectDetailsForm_ItemRequest extends VersionedData
         $record = $this->getRecord();
 
         // Hide the 'Save & publish' button if we're on a brand new module.
-        if (!$this->exists()) {
+        if ($this->ID == 0) {
             $actions = $form->Actions();
 
             // Remove the publish button on the pre-module state

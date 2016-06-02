@@ -58,19 +58,26 @@ class ModularPage extends Page
      */
     public function onBeforeWrite()
     {
-        $classes = ClassInfo::subclassesFor(__CLASS__);
+        $pageClass = get_called_class();
 
-        // Only run this code if we're on a valid instance of this class.
-        // Fixes bug when changaing page type via the CMS (e.g. ModularPage -> Page)
-        if (in_array($this->ClassName, $classes)) {
-            if ($this->Modules()->Count()) {
-                $searchBody = '';
+        // Behaviour can be disabled via the config
+        $writeContent = Config::inst()->get($pageClass, 'write_content');
 
-                foreach ($this->Modules() as $module) {
-                    $searchBody .= $module->getSearchBody().PHP_EOL;
+        if ($writeContent) {
+            $classes = ClassInfo::subclassesFor(__CLASS__);
+
+            // Only run this code if we're on a valid instance of this class.
+            // Fixes bug when changaing page type via the CMS (e.g. ModularPage -> Page)
+            if (in_array($this->ClassName, $classes)) {
+                if ($this->Modules()->Count()) {
+                    $searchBody = '';
+
+                    foreach ($this->Modules() as $module) {
+                        $searchBody .= $module->getSearchBody().PHP_EOL;
+                    }
+
+                    $this->Content = $searchBody;
                 }
-
-                $this->Content = $searchBody;
             }
         }
 

@@ -4,3 +4,4 @@ PageModule:
 
 ModularPage:
   base_class: PageModule
+  write_content: true
