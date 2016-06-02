@@ -112,6 +112,18 @@ BlogPage:
   base_class: BlogModuleBase
 ```
 
+## Search body population
+
+The default behaviour is to populate the SiteTree `Content` field with the contents of all the page's modules, so that it can be indexed by Silverstripe's built-in search functionality. If you don't want this behaviour you can disable it on a per-class basis;
+
+```yml
+ModularPage:
+  write_content: true
+
+BlogPage:
+  write_content: false
+```
+
 ## Testing
 
 Run ``phpunit`` from within the module folder, or ``/dev/tests`` from the browser.

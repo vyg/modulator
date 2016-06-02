@@ -63,6 +63,11 @@ class ModularPage extends Page
         // Behaviour can be disabled via the config
         $writeContent = Config::inst()->get($pageClass, 'write_content');
 
+        // If a custom config doesn't exist, check ModularPage
+        if (is_null($writeContent)) {
+            $writeContent = Config::inst()->get('ModularPage', 'write_content');
+        }
+
         if ($writeContent) {
             $classes = ClassInfo::subclassesFor(__CLASS__);
 
