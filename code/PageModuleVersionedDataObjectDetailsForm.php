@@ -49,8 +49,10 @@ class PageModuleVersionedDataObjectDetailsForm_ItemRequest extends VersionedData
 
         // Enable CMS preview
         // .cms-previewable enables the preview panel in the front-end
-        // .cms-pagemodule CSS class is used by our javascript to handle previews 
-        $form->addExtraClass('cms-previewable cms-pagemodule');
+        // .cms-pagemodule CSS class is used by our javascript to handle previews
+        if ($form && is_object($form)) {
+            $form->addExtraClass('cms-previewable cms-pagemodule');
+        }
 
         // Creat a navigaor and point it at the parent page
         $navigator = new SilverStripeNavigator($this->record->Page());
