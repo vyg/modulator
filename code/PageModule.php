@@ -108,6 +108,8 @@ class PageModule extends DataObject
                 $typeField->setDescription('The type of module determines what content and functionality it will provide');
                 $fields->push($typeField);
             }
+
+            $this->extend('updateCMSFields', $fields);
         } else {
             // Existing module state
             $fields = parent::getCMSFields();
@@ -119,8 +121,6 @@ class PageModule extends DataObject
             // Helps us keep track of preview focus
             $fields->addFieldToTab('Root.Main', new HiddenField('ModulatorID', 'ModulatorID', $this->ID));
         }
-
-        $this->extend('updateCMSFields', $fields);
 
         return $fields;
     }
