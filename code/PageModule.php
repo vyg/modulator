@@ -6,8 +6,8 @@
 class PageModule extends DataObject
 {
     public static $label = 'Page module';
-    public static $icon = 'modulator/images/module-generic.png';
     public static $description = 'The base class for all module types. You should override this description.';
+    public static $category = 'General';
 
     /**
      * @var array
@@ -90,7 +90,7 @@ class PageModule extends DataObject
             foreach ($allowedModules as $class) {
                 $instance = new $class();
 
-                $classList[$class] = '<img src="'.$instance::$icon.'"><strong>'.$class::$label.'</strong><p>'.$class::$description.'</p>';
+                $classList[$class::$category][$class] = sprintf('%s - %s', $class::$label, $class::$description);
             }
 
             $fields = new FieldList();
@@ -104,7 +104,7 @@ class PageModule extends DataObject
                 $labelField->setDescription('A reference name for this block, not displayed on the website');
                 $fields->push($labelField);
 
-                $typeField = new OptionSetField('NewClassName', 'Type', $classList);
+                $typeField = new GroupedDropdownField('NewClassName', 'Type', $classList);
                 $typeField->setDescription('The type of module determines what content and functionality it will provide');
                 $fields->push($typeField);
             }
@@ -135,7 +135,7 @@ class PageModule extends DataObject
 
     /**
      * Gets the page link for the parent page.
-     * 
+     *
      * @return string
      */
     public function Link()
@@ -170,7 +170,7 @@ class PageModule extends DataObject
     /**
      * Hook to supply module text content to the parent page element for indexing in searches.
      * Override in sub-class.
-     * 
+     *
      * @return string
      */
     public function getSearchBody()

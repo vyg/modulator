@@ -38,7 +38,7 @@ class GridFieldModuleColumns extends GridFieldDataColumns implements GridField_H
     {
         switch ($columnName) {
             case 'Icon':
-                return '<img src="'.$record::$icon.'">';
+                return str_replace(' ', '&nbsp;', $record::$label);
 
             case 'Summary':
                 return '<strong>'.$record->Title.'</strong><br>'.$record->getSummaryContent();

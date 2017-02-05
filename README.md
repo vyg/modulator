@@ -18,7 +18,7 @@ Modulator is an extendable system for creating sub-page components. It achieves 
 
 Modulator can be installed via Composer;
 
-    composer require touchcast/modulator dev-master
+    composer require touchcast/modulator
 
 After installing, run a ``/dev/build`` to generate the database tables.
 
@@ -41,8 +41,8 @@ class HeroModule extends PageModule {
   // Give it a description
   public static $description = "A large title section at the top of the page";
 
-  // Give it a 64x64px icon image
-  public static $icon = "mysite/images/module-hero.png";
+  // Optionally group your modules by type, for easy reference in the CMS
+  public static $category = "Headers";
 
   // Add any fields required for the module
   private static $db = array(
@@ -51,12 +51,12 @@ class HeroModule extends PageModule {
 
   // Provide custom summary content for the gridfield
   public function getSummaryContent() {
-      return $this->Heading;
+    return $this->Heading;
   }
 
   // Provide text content from the module to be included in the pages's search index
   public function getSearchBody() {
-      return $this->Heading;
+    return $this->Heading;
   }
 }
 ```
@@ -85,7 +85,7 @@ For each page class you extend from ``ModularPage`` you can specify a list of mo
 
 ```php
 class CustomPage extends ModularPage {
-  
+
   public static $allowed_modules = array(
     'HeroModule',
     'TextModule'
@@ -127,4 +127,3 @@ BlogPage:
 ## Testing
 
 Run ``phpunit`` from within the module folder, or ``/dev/tests`` from the browser.
-
