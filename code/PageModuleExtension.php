@@ -19,15 +19,10 @@ class PageModuleExtension extends DataExtension
 
             // Only apply this action to PageModule objects, not all SortableGridField items
             if (in_array('PageModule', $ancestry) && $module->isPublished()) {
-                $order = (int) $module->Order;
 
-                $origStage = Versioned::current_stage();
-                Versioned::reading_stage('Live');
-
-                $module->Order = $order;
-                $module->write();
-
-                Versioned::reading_stage($origStage);
+                // Note: this code previously used Versioned's stage system to publish the changes, but this wasn't always reliable.
+                // Manually updating the published stage isn't ideal...
+                DB::query(sprintf('UPDATE PageModule_Live SET `Order` = %s WHERE ID = %s LIMIT 1', $module->Order, $module->ID));
             }
         }
     }
