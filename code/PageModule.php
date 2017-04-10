@@ -168,6 +168,28 @@ class PageModule extends DataObject
     }
 
     /**
+     * Remove the live stage on delete, otherwise content is orphaned in live and cannot be removed.
+     */
+    protected function onAfterDelete()
+    {
+        // Look up all of the associated tables
+        $ancestry = Classinfo::ancestry(get_called_class());
+
+        foreach ($ancestry as $class) {
+            if (Classinfo::hasTable($class)) {
+
+                // Live table
+                DB::query(sprintf('DELETE FROM "%s_Live" WHERE ID = %s LIMIT 1', $class, $this->ID));
+
+                // Version history
+                DB::query(sprintf('DELETE FROM "%s_versions" WHERE RecordID = %s', $class, $this->ID));
+            }
+        }
+
+        parent::onAfterDelete();
+    }
+
+    /**
      * Hook to supply module text content to the parent page element for indexing in searches.
      * Override in sub-class.
      *
