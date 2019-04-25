@@ -1,5 +1,19 @@
 <?php
 
+namespace Voyage\Modulator;
+
+use Page;
+use LiteralField;
+use GridFieldOrderableRows;
+use GridField;
+use Config;
+use ClassInfo;
+use Page_Controller;
+use Voyage\Modulator\PageModule;
+use Voyage\Modulator\ModularPage;
+
+
+
 /**
  * Class ModularPage.
  */
@@ -15,7 +29,7 @@ class ModularPage extends Page
      * @var array
      */
     private static $has_many = array(
-        'Modules' => 'PageModule',
+        'Modules' => PageModule::class,
     );
 
     /**
@@ -65,7 +79,7 @@ class ModularPage extends Page
 
         // If a custom config doesn't exist, check ModularPage
         if (is_null($writeContent)) {
-            $writeContent = Config::inst()->get('ModularPage', 'write_content');
+            $writeContent = Config::inst()->get(ModularPage::class, 'write_content');
         }
 
         if ($writeContent) {
@@ -103,12 +117,12 @@ class ModularPage extends Page
 
         // If a custom config doesn't exist, check ModularPage
         if (empty($baseClass)) {
-            $baseClass = Config::inst()->get('ModularPage', 'base_class');
+            $baseClass = Config::inst()->get(ModularPage::class, 'base_class');
         }
 
         // If no config exists, use defaults
         if (empty($baseClass)) {
-            $baseClass = 'PageModule';
+            $baseClass = PageModule::class;
         }
 
         $classes = ClassInfo::subclassesFor($baseClass);

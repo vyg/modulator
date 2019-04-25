@@ -1,11 +1,7 @@
-PageModule:
-  extensions:
-    - VersionedDataObject
-
-ModularPage:
-  base_class: PageModule
+Voyage\\Modulator\\ModularPage:
+  base_class: 'Voyage\Modulator\PageModule'
   write_content: true
 
-GridFieldOrderableRows:
+Voyage\\Modulator\\GridFieldOrderableRows:
   extensions:
-    - PageModuleExtension
+    - 'Voyage\Modulator\PageModuleExtension'

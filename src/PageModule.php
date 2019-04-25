@@ -1,5 +1,24 @@
 <?php
 
+namespace Voyage\Modulator;
+
+use DataObject;
+use RequiredFields;
+use Requirements;
+use Session;
+use SiteTree;
+use FieldList;
+use LiteralField;
+use TextField;
+use GroupedDropdownField;
+use HiddenField;
+use Classinfo;
+use DB;
+use Voyage\Modulator\ModularPage;
+use Voyage\Modulator\PageModule;
+
+
+
 /**
  * Class PageModule.
  */
@@ -21,7 +40,7 @@ class PageModule extends DataObject
      * @var array
      */
     private static $has_one = array(
-        'Page' => 'ModularPage',
+        'Page' => ModularPage::class,
     );
 
     /**
@@ -148,7 +167,7 @@ class PageModule extends DataObject
      */
     public function onBeforeWrite()
     {
-        if ($this->ClassName == 'PageModule' && !$this->exists() && !empty($this->NewClassName)) {
+        if ($this->ClassName == PageModule::class && !$this->exists() && !empty($this->NewClassName)) {
             $instance = $this->newClassInstance($this->NewClassName);
             $this->ClassName = $this->NewClassName;
 

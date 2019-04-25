@@ -1,7 +1,17 @@
 <?php
 
+namespace Voyage\Modulator;
+
+
 use Heyday\VersionedDataObjects\VersionedDataObjectDetailsForm;
 use Heyday\VersionedDataObjects\VersionedDataObjectDetailsForm_ItemRequest;
+use Requirements;
+use ClassInfo;
+use SilverStripeNavigator;
+use LiteralField;
+use Voyage\Modulator\PageModule;
+
+
 
 /**
  * Class PageModuleVersionedDataObjectDetailsForm.
@@ -42,8 +52,8 @@ class PageModuleVersionedDataObjectDetailsForm_ItemRequest extends VersionedData
             $actions->removeByName('action_publish');
 
             // Remove the save action if there are no sub-classes to instantiate
-            $classes = ClassInfo::subclassesFor('PageModule');
-            unset($classes['PageModule']);
+            $classes = ClassInfo::subclassesFor(PageModule::class);
+            unset($classes[PageModule::class]);
 
             if (!count($classes)) {
                 $actions->removeByName('action_save');

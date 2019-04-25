@@ -1,5 +1,14 @@
 <?php
 
+namespace Voyage\Modulator;
+
+use DataExtension;
+use Classinfo;
+use DB;
+use Voyage\Modulator\PageModule;
+
+
+
 /**
  * Class PageModuleExtension.
  */
@@ -18,7 +27,7 @@ class PageModuleExtension extends DataExtension
             $ancestry = Classinfo::ancestry($module->ClassName);
 
             // Only apply this action to PageModule objects, not all SortableGridField items
-            if (in_array('PageModule', $ancestry) && $module->isPublished()) {
+            if (in_array(PageModule::class, $ancestry) && $module->isPublished()) {
 
                 // Note: this code previously used Versioned's stage system to publish the changes, but this wasn't always reliable.
                 // Manually updating the published stage isn't ideal...

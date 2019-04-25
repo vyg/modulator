@@ -1,20 +1,24 @@
 {
-  "name": "touchcast/modulator",
+  "name": "vyg/modulator",
   "description": "A SilverStripe module for dynamically creating pages from smaller components",
-  "type": "silverstripe-module",
-  "authors": [
-    {
-      "name": "Andrew Joll",
-      "email": "andrew.joll@touchcast.co.nz"
-    }
-  ],
+  "type": "silverstripe-vendormodule",
   "require": {
-    "composer/installers": "~1.0",
-    "silverstripe-australia/gridfieldextensions": "1.3.0",
-    "heyday/silverstripe-versioneddataobjects": "^2.0.5",
-    "silverstripe/cms": "~3.1"
+    "silverstripe/vendor-plugin": "^1",
+    "silverstripe/framework": "^4.1",
+    "symbiote/silverstripe-gridfieldextensions": "^3.2.1"
   },
   "require-dev": {
     "phpunit/phpunit": "~3.7"
+  },
+  "autoload": {
+    "psr-4": {
+      "Voyage\\Modulator": "src/"
+    }
+  },
+  "extra": {
+    "expose": [
+      "css",
+      "javascript"
+    ]
   }
 }

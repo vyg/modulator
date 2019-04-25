@@ -1,0 +1,9 @@
+mappings:
+  ModularPage: Voyage\Modulator\ModularPage
+  ModularPage_Controller: Voyage\Modulator\ModularPage_Controller
+  PageModule: Voyage\Modulator\PageModule
+  GridFieldConfig_ModuleEditor: Voyage\Modulator\GridFieldConfig_ModuleEditor
+  PageModuleExtension: Voyage\Modulator\PageModuleExtension
+  GridFieldModuleColumns: Voyage\Modulator\GridFieldModuleColumns
+  PageModuleVersionedDataObjectDetailsForm: Voyage\Modulator\PageModuleVersionedDataObjectDetailsForm
+  PageModuleVersionedDataObjectDetailsForm_ItemRequest: Voyage\Modulator\PageModuleVersionedDataObjectDetailsForm_ItemRequest

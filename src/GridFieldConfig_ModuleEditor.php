@@ -1,5 +1,18 @@
 <?php
 
+namespace Voyage\Modulator;
+
+use GridFieldConfig;
+use GridFieldButtonRow;
+use GridFieldAddNewButton;
+use GridFieldToolbarHeader;
+use GridFieldSortableHeader;
+use GridFieldFilterHeader;
+use GridFieldDataColumns;
+use GridFieldEditButton;
+use GridFieldDeleteAction;
+
+
 /**
  * Class GridFieldConfig_ModuleEditor.
  */

@@ -1,5 +1,12 @@
 <?php
 
+namespace Voyage\Modulator;
+
+use GridFieldDataColumns;
+use GridField_HTMLProvider;
+use Requirements;
+
+
 /**
  * Class GridFieldModuleColumns.
  */
