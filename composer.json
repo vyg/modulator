@@ -12,7 +12,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Voyage\\Modulator": "src/"
+      "Voyage\\Modulator\\": "src/"
     }
   },
   "extra": {
