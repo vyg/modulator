@@ -2,14 +2,13 @@
 
 namespace Voyage\Modulator;
 
-
+use SilverStripe\Core\ClassInfo;
+use Voyage\Modulator\PageModule;
+use SilverStripe\View\Requirements;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\CMS\Controllers\SilverStripeNavigator;
 use Heyday\VersionedDataObjects\VersionedDataObjectDetailsForm;
 use Heyday\VersionedDataObjects\VersionedDataObjectDetailsForm_ItemRequest;
-use Requirements;
-use ClassInfo;
-use SilverStripeNavigator;
-use LiteralField;
-use Voyage\Modulator\PageModule;
 
 
 
@@ -33,7 +32,7 @@ class PageModuleVersionedDataObjectDetailsForm_ItemRequest extends VersionedData
 
     /**
      * Additional magic happens here. Trick LeftAndMain into thinking we're a previewable SiteTree object.
-     * 
+     *
      * @return Form
      */
     public function ItemEditForm()

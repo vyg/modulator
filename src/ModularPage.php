@@ -3,16 +3,14 @@
 namespace Voyage\Modulator;
 
 use Page;
-use LiteralField;
-use GridFieldOrderableRows;
-use GridField;
-use Config;
-use ClassInfo;
-use Page_Controller;
+use PageController;
+use SilverStripe\Core\ClassInfo;
 use Voyage\Modulator\PageModule;
-use Voyage\Modulator\ModularPage;
-
-
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\Forms\GridField\GridField;
+use Voyage\Modulator\GridFieldConfig_ModuleEditor;
+use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
 
 /**
  * Class ModularPage.
@@ -79,7 +77,7 @@ class ModularPage extends Page
 
         // If a custom config doesn't exist, check ModularPage
         if (is_null($writeContent)) {
-            $writeContent = Config::inst()->get(ModularPage::class, 'write_content');
+            $writeContent = Config::inst()->get(__CLASS__, 'write_content');
         }
 
         if ($writeContent) {
@@ -105,7 +103,7 @@ class ModularPage extends Page
 
     /**
      * Build the list of allowed modules for this page type.
-     * 
+     *
      * @return array the list of class names to be used
      */
     public static function getAllowedModules()
@@ -117,7 +115,7 @@ class ModularPage extends Page
 
         // If a custom config doesn't exist, check ModularPage
         if (empty($baseClass)) {
-            $baseClass = Config::inst()->get(ModularPage::class, 'base_class');
+            $baseClass = Config::inst()->get(__CLASS__, 'base_class');
         }
 
         // If no config exists, use defaults
@@ -146,7 +144,7 @@ class ModularPage extends Page
 /**
  * Class ModularPage_Controller.
  */
-class ModularPage_Controller extends Page_Controller
+class ModularPage_Controller extends PageController
 {
     /**
      * return ArrayList.

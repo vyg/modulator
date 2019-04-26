@@ -2,9 +2,9 @@
 
 namespace Voyage\Modulator;
 
-use GridFieldDataColumns;
-use GridField_HTMLProvider;
-use Requirements;
+use SilverStripe\View\Requirements;
+use SilverStripe\Forms\GridField\GridFieldDataColumns;
+use SilverStripe\Forms\GridField\GridField_HTMLProvider;
 
 
 /**
@@ -17,7 +17,7 @@ class GridFieldModuleColumns extends GridFieldDataColumns implements GridField_H
      */
     public function getHTMLFragments($gridField)
     {
-        Requirements::css(MODULATOR_PATH.'/css/GridFieldModuleColumns.css');
+        Requirements::css('touchcast/modulator:css/GridFieldModuleColumns.css');
     }
 
     /*

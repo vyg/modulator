@@ -1,7 +1,11 @@
+---
+name: "Modulator"
+---
+
 Voyage\\Modulator\\ModularPage:
-  base_class: 'Voyage\Modulator\PageModule'
+  base_class: 'Voyage\\Modulator\\PageModule'
   write_content: true
 
-Voyage\\Modulator\\GridFieldOrderableRows:
+Symbiote\\GridFieldExtensions\\GridFieldOrderableRows:
   extensions:
-    - 'Voyage\Modulator\PageModuleExtension'
+    - 'Voyage\\Modulator\\PageModuleExtension'

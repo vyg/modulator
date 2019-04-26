@@ -2,20 +2,18 @@
 
 namespace Voyage\Modulator;
 
-use DataObject;
-use RequiredFields;
-use Requirements;
-use Session;
-use SiteTree;
-use FieldList;
-use LiteralField;
-use TextField;
-use GroupedDropdownField;
-use HiddenField;
-use Classinfo;
-use DB;
+use Voyage\Modulator\Utilities;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\TextField;
 use Voyage\Modulator\ModularPage;
-use Voyage\Modulator\PageModule;
+use SilverStripe\Forms\HiddenField;
+use SilverStripe\View\Requirements;
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\Versioned\Versioned;
+use SilverStripe\Forms\RequiredFields;
+use SilverStripe\Forms\GroupedDropdownField;
 
 
 
@@ -27,6 +25,8 @@ class PageModule extends DataObject
     public static $label = 'Page module';
     public static $description = 'The base class for all module types. You should override this description.';
     public static $category = 'General';
+
+    private static $table_name = "PageModule";
 
     /**
      * @var array
@@ -48,12 +48,9 @@ class PageModule extends DataObject
      */
     private static $default_sort = 'Order';
 
-    /**
-     * @var array
-     */
-    private static $extensions = array(
-        'VersionedDataObject',
-    );
+    private static $extensions = [
+        Versioned::class
+    ];
 
     /**
      * @var array
@@ -66,6 +63,7 @@ class PageModule extends DataObject
      * @var array
      */
     private static $searchable_fields = array();
+
 
     /**
      * @return RequiredFields
@@ -83,16 +81,17 @@ class PageModule extends DataObject
         if (!$this->exists()) {
 
             // The new module state
-            Requirements::css(MODULATOR_PATH.'/css/PageModule.css');
-            Requirements::javascript(MODULATOR_PATH.'/javascript/PageModule.js');
+            // Requirements::css('touchcast/modulator:css/PageModule.css');
+            Requirements::javascript('touchcast/modulator:javascript/PageModule.js');
 
             $allowedModules = array();
 
             // Determine the type of the parent page
-            $currentPageID = Session::get('CMSMain.currentPage');
+            $session = Utilities::getSession();
+            $currentPageID = $session->get('SilverStripe\CMS\Controllers\CMSMain.currentPage');
 
             if ($currentPageID) {
-                $currentPage = SiteTree::get_by_id('SiteTree', $currentPageID);
+                $currentPage = SiteTree::get_by_id($currentPageID);
 
                 if ($currentPage) {
                     $currentPageClass = $currentPage->ClassName;
@@ -184,28 +183,6 @@ class PageModule extends DataObject
         }
 
         parent::onBeforeWrite();
-    }
-
-    /**
-     * Remove the live stage on delete, otherwise content is orphaned in live and cannot be removed.
-     */
-    protected function onAfterDelete()
-    {
-        // Look up all of the associated tables
-        $ancestry = Classinfo::ancestry(get_called_class());
-
-        foreach ($ancestry as $class) {
-            if (Classinfo::hasTable($class)) {
-
-                // Live table
-                DB::query(sprintf('DELETE FROM "%s_Live" WHERE ID = %s LIMIT 1', $class, $this->ID));
-
-                // Version history
-                DB::query(sprintf('DELETE FROM "%s_versions" WHERE RecordID = %s', $class, $this->ID));
-            }
-        }
-
-        parent::onAfterDelete();
     }
 
     /**

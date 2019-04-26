@@ -2,12 +2,10 @@
 
 namespace Voyage\Modulator;
 
-use DataExtension;
-use Classinfo;
-use DB;
+use SilverStripe\ORM\DB;
+use SilverStripe\Core\ClassInfo;
 use Voyage\Modulator\PageModule;
-
-
+use SilverStripe\ORM\DataExtension;
 
 /**
  * Class PageModuleExtension.
@@ -19,12 +17,16 @@ class PageModuleExtension extends DataExtension
      * Altering the order will only update the draft stage.
      * This extension hooks into the reorder event and pushes the changes through to Live.
      *
-     * @param HastManyList $list The list of modules
+     * @param HasManyList $list The list of modules
      */
     public function onAfterReorderItems($list)
     {
+
+        var_dump($list);
+        die();
+
         foreach ($list as $module) {
-            $ancestry = Classinfo::ancestry($module->ClassName);
+            $ancestry = ClassInfo::ancestry($module->ClassName);
 
             // Only apply this action to PageModule objects, not all SortableGridField items
             if (in_array(PageModule::class, $ancestry) && $module->isPublished()) {
