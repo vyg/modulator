@@ -30,6 +30,10 @@ class ModularPage extends Page
         'Modules' => PageModule::class,
     );
 
+    private static $owns = [
+        'Modules'
+    ];
+
     /**
      * @var array
      */
