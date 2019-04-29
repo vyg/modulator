@@ -4,8 +4,51 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "05d81313f449cab4671da326f0777746",
+    "content-hash": "ed1cd944f223c80256c8374da9a7c879",
     "packages": [
+        {
+            "name": "arillo/silverstripe-dataobject-preview",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/arillo/silverstripe-dataobject-preview.git",
+                "reference": "3fd4a148465ea712defddd3175105dcf0b624427"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/arillo/silverstripe-dataobject-preview/zipball/3fd4a148465ea712defddd3175105dcf0b624427",
+                "reference": "3fd4a148465ea712defddd3175105dcf0b624427",
+                "shasum": ""
+            },
+            "require": {
+                "silverstripe/framework": "^4"
+            },
+            "type": "silverstripe-vendormodule",
+            "extra": {
+                "installer-name": "dataobject-preview",
+                "expose": [
+                    "client"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Murcia",
+                    "email": "dm@arillo.net"
+                }
+            ],
+            "description": "Shows a preview of your dataobjects like the one you get for pages.",
+            "homepage": "https://github.com/arillo/silverstripe-dataobject-preview",
+            "keywords": [
+                "dataobject",
+                "preview",
+                "silverstripe"
+            ],
+            "time": "2018-05-25T13:23:06+00:00"
+        },
         {
             "name": "composer/ca-bundle",
             "version": "1.1.4",

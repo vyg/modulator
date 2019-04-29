@@ -7,20 +7,21 @@ use SilverStripe\ORM\DataObject;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextField;
 use Voyage\Modulator\ModularPage;
+use SilverStripe\Control\Director;
 use SilverStripe\Forms\HiddenField;
 use SilverStripe\View\Requirements;
 use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Control\Controller;
 use SilverStripe\Forms\LiteralField;
+use SilverStripe\ORM\CMSPreviewable;
 use SilverStripe\Versioned\Versioned;
 use SilverStripe\Forms\RequiredFields;
 use SilverStripe\Forms\GroupedDropdownField;
 
-
-
 /**
  * Class PageModule.
  */
-class PageModule extends DataObject
+class PageModule extends DataObject implements CMSPreviewable
 {
     public static $label = 'Page module';
     public static $description = 'The base class for all module types. You should override this description.';
@@ -141,6 +142,20 @@ class PageModule extends DataObject
         }
 
         return $fields;
+    }
+
+    public function PreviewLink($action = null)
+    {
+        return Controller::join_links(Director::baseURL(), 'cms-preview', 'show', $this->ClassName, $this->ID);
+    }
+
+    public function getMimeType()
+    {
+        return 'text/html';
+    }
+
+    public function CMSEditLink()
+    {
     }
 
     /**
