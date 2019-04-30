@@ -5,3 +5,7 @@ name: "Modulator"
 Voyage\\Modulator\\ModularPage:
   base_class: 'Voyage\\Modulator\\PageModule'
   write_content: true
+
+SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest:
+  extensions:
+    - Voyage\Modulator\GridFieldDetailForm_ItemRequestExtension

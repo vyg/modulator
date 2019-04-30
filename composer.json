@@ -5,8 +5,7 @@
   "require": {
     "silverstripe/vendor-plugin": "^1",
     "silverstripe/framework": "^4.1",
-    "symbiote/silverstripe-gridfieldextensions": "^3.2.1",
-    "arillo/silverstripe-dataobject-preview": "^2.0.1"
+    "symbiote/silverstripe-gridfieldextensions": "^3.2.1"
   },
   "require-dev": {
     "phpunit/phpunit": "~3.7"

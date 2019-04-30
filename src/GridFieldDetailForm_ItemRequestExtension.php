@@ -7,41 +7,33 @@ use Voyage\Modulator\PageModule;
 use SilverStripe\View\Requirements;
 use SilverStripe\Forms\LiteralField;
 use SilverStripe\CMS\Controllers\SilverStripeNavigator;
-use Heyday\VersionedDataObjects\VersionedDataObjectDetailsForm;
-use Heyday\VersionedDataObjects\VersionedDataObjectDetailsForm_ItemRequest;
-
-
-
-/**
- * Class PageModuleVersionedDataObjectDetailsForm.
- */
-class PageModuleVersionedDataObjectDetailsForm extends VersionedDataObjectDetailsForm
-{
-}
+use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
+use SilverStripe\Control\Controller;
+use SilverStripe\Core\Extension;
+use SilverStripe\ORM\CMSPreviewable;
 
 /**
  * Class PageModuleVersionedDataObjectDetailsForm_ItemRequest.
  */
-class PageModuleVersionedDataObjectDetailsForm_ItemRequest extends VersionedDataObjectDetailsForm_ItemRequest
+class GridFieldDetailForm_ItemRequestExtension extends Extension
 {
-    private static $allowed_actions = array(
-        'edit',
-        'view',
-        'ItemEditForm',
-    );
+    public function updateItemEditForm(&$form)
+    {
+        $fields = $form->Fields();
+        if ($this->owner->record instanceof CMSPreviewable && !$fields->fieldByName('SilverStripeNavigator'))
+        {
+            $this->injectNavigatorAndPreview($form, $fields);
+        }
+    }
 
     /**
-     * Additional magic happens here. Trick LeftAndMain into thinking we're a previewable SiteTree object.
-     *
-     * @return Form
+     * Add extra classes/javascript to form to enable preview and render with Silverstripe Navigator
      */
-    public function ItemEditForm()
+    private function injectNavigatorAndPreview(&$form, &$fields)
     {
-        Requirements::javascript(MODULATOR_PATH.'/javascript/LeftAndMain.Preview.js');
+        Requirements::javascript('touchcast/modulator:/javascript/LeftAndMain.Preview.js');
 
-        $form = parent::ItemEditForm();
-
-        $record = $this->getRecord();
+        $record = $this->owner->getRecord();
 
         // Hide the 'Save & publish' button if we're on a brand new module.
         if ($record && $record->ID == 0) {
@@ -66,16 +58,14 @@ class PageModuleVersionedDataObjectDetailsForm_ItemRequest extends VersionedData
             $form->addExtraClass('cms-previewable cms-pagemodule');
         }
 
-        // Creat a navigaor and point it at the parent page
-        $navigator = new SilverStripeNavigator($this->record->Page());
+        // Create a navigator and point it at the parent page
+        $navigator = new SilverStripeNavigator($this->owner->record->Page());
 
-        $navField = new LiteralField('SilverStripeNavigator', $navigator->renderWith('LeftAndMain_SilverStripeNavigator'));
+        $navField = new LiteralField('SilverStripeNavigator', $navigator->renderWith('SilverStripe\Admin\Includes\LeftAndMain_SilverStripeNavigator'));
         $navField->setAllowHTML(true);
 
         $fields = $form->Fields();
 
         $fields->push($navField);
-
-        return $form;
     }
 }
