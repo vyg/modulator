@@ -1,6 +1,6 @@
 mappings:
   ModularPage: Voyage\Modulator\ModularPage
-  ModularPage_Controller: Voyage\Modulator\ModularPage_Controller
+  ModularPageController: Voyage\Modulator\ModularPageController
   PageModule: Voyage\Modulator\PageModule
   GridFieldConfig_ModuleEditor: Voyage\Modulator\GridFieldConfig_ModuleEditor
   PageModuleExtension: Voyage\Modulator\PageModuleExtension

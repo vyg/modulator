@@ -146,9 +146,9 @@ class ModularPage extends Page
 }
 
 /**
- * Class ModularPage_Controller.
+ * Class ModularPageController.
  */
-class ModularPage_Controller extends PageController
+class ModularPageController extends PageController
 {
     /**
      * return ArrayList.
