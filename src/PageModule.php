@@ -163,7 +163,7 @@ class PageModule extends DataObject implements CMSPreviewable
      */
     public function Content()
     {
-        return $this->renderWith(array($this->ClassName));
+        return $this->renderWith(sprintf('Includes/Modules/%s', $this->ClassName));
     }
 
     /**
