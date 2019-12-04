@@ -20,15 +20,19 @@ class ModularPage extends Page
     /**
      * @var array
      */
-    private static $db = array(
-    );
+    private static $db = [];
 
     /**
      * @var array
      */
-    private static $has_many = array(
+    private static $table_name = "ModularPage";
+
+    /**
+     * @var array
+     */
+    private static $has_many = [
         'Modules' => PageModule::class,
-    );
+    ];
 
     private static $owns = [
         'Modules'
@@ -37,7 +41,7 @@ class ModularPage extends Page
     /**
      * @var array
      */
-    public static $allowed_modules = array();
+    public static $allowed_modules = [];
 
     /**
      * @return FieldList
