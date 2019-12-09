@@ -4,7 +4,9 @@ namespace Voyage\Modulator;
 
 use Voyage\Modulator\Utilities;
 use SilverStripe\ORM\DataObject;
+use Voyage\Modulator\PageModule;
 use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\FormField;
 use SilverStripe\Forms\TextField;
 use Voyage\Modulator\ModularPage;
 use SilverStripe\Control\Director;
@@ -32,17 +34,17 @@ class PageModule extends DataObject implements CMSPreviewable
     /**
      * @var array
      */
-    private static $db = array(
+    private static $db = [
         'Title' => 'Varchar(128)',
         'Order' => 'Int',
-    );
+    ];
 
     /**
      * @var array
      */
-    private static $has_one = array(
+    private static $has_one = [
         'Page' => ModularPage::class,
-    );
+    ];
 
     /**
      * @var string
@@ -56,14 +58,17 @@ class PageModule extends DataObject implements CMSPreviewable
     /**
      * @var array
      */
-    private static $summary_fields = array(
-        'Summary' => 'Summary',
-    );
+    private static $summary_fields = [
+        'Title',
+        'NiceType' => 'Type',
+    ];
 
-    /**
-     * @var array
-     */
-    private static $searchable_fields = array();
+    // /**
+    //  * @var array
+    //  */
+    private static $searchable_fields = [
+        'Title'
+    ];
 
 
     /**
@@ -79,67 +84,87 @@ class PageModule extends DataObject implements CMSPreviewable
      */
     public function getCMSFields()
     {
-        if (!$this->exists()) {
+        $fields = parent::getCMSFields();
 
-            // The new module state
-            // Requirements::css('touchcast/modulator:css/PageModule.css');
-            Requirements::javascript('touchcast/modulator:javascript/PageModule.js');
+        // if (!$this->exists()) {
 
-            $allowedModules = array();
+        //     // The new module state
+        //     // Requirements::css('touchcast/modulator:css/PageModule.css');
+        //     Requirements::javascript('touchcast/modulator:javascript/PageModule.js');
 
-            // Determine the type of the parent page
-            $session = Utilities::getSession();
-            $currentPageID = $session->get('SilverStripe\CMS\Controllers\CMSMain.currentPage');
+        //     $allowedModules = array();
 
-            if ($currentPageID) {
-                $currentPage = SiteTree::get_by_id($currentPageID);
+        //     // Determine the type of the parent page
+        //     $session = Utilities::getSession();
+        //     $currentPageID = $session->get('SilverStripe\CMS\Controllers\CMSMain.currentPage');
 
-                if ($currentPage) {
-                    $currentPageClass = $currentPage->ClassName;
+        //     if ($currentPageID) {
+        //         $currentPage = SiteTree::get_by_id($currentPageID);
 
-                    // Get the list of allowed modules for this page type
-                    if (class_exists($currentPageClass) && method_exists($currentPageClass, 'getAllowedModules')) {
-                        $allowedModules = $currentPageClass::getAllowedModules();
-                    }
-                }
-            }
+        //         if ($currentPage) {
+        //             $currentPageClass = $currentPage->ClassName;
 
-            $classList = array();
+        //             // Get the list of allowed modules for this page type
+        //             if (class_exists($currentPageClass) && method_exists($currentPageClass, 'getAllowedModules')) {
+        //                 $allowedModules = $currentPageClass::getAllowedModules();
+        //             }
+        //         }
+        //     }
 
-            foreach ($allowedModules as $class) {
-                $instance = new $class();
+        //     $classList = array();
 
-                $classList[$class::$category][$class] = sprintf('%s - %s', $class::$label, $class::$description);
-            }
+        //     foreach ($allowedModules as $class) {
+        //         $instance = new $class();
 
-            $fields = new FieldList();
+        //         $classList[$class::$category][$class] = sprintf('%s - %s', $class::$label, $class::$description);
+        //     }
 
-            if (!count($allowedModules)) {
-                $typeField = new LiteralField('Type', '<span class="message required">There are no module types defined, please create some.</span>');
+        //     // $fields = new FieldList();
 
-                $fields->push($typeField);
-            } else {
-                $labelField = new TextField('Title', 'Label');
-                $labelField->setDescription('A reference name for this block, not displayed on the website');
-                $fields->push($labelField);
+        //     if (!count($allowedModules)) {
+        //         // $typeField = new LiteralField('Type', '<span class="message required">There are no module types defined, please create some.</span>');
 
-                $typeField = new GroupedDropdownField('NewClassName', 'Type', $classList);
-                $typeField->setDescription('The type of module determines what content and functionality it will provide');
-                $fields->push($typeField);
-            }
+        //         // $fields->push($typeField);
+        //     } else {
+        //         $labelField = new TextField('Title', 'Label');
+        //         $labelField->setDescription('A reference name for this block, not displayed on the website');
+        //         $fields->push($labelField);
 
-            $this->extend('updateCMSFields', $fields);
-        } else {
-            // Existing module state
-            $fields = parent::getCMSFields();
+        //         // $typeField = new GroupedDropdownField('NewClassName', 'Type', $classList);
+        //         // $typeField->setDescription('The type of module determines what content and functionality it will provide');
+        //         // $fields->push($typeField);
+        //     }
 
-            // Don't expose Order to the CMS
-            $fields->removeFieldFromTab('Root.Main', 'Order');
-            $fields->removeFieldFromTab('Root.Main', 'PageID');
+        //     $labelField = new TextField('Title', 'Label');
+        //     $labelField->setDescription('A reference name for this block, not displayed on the website');
+        //     $fields->push($labelField);
 
-            // Helps us keep track of preview focus
-            $fields->addFieldToTab('Root.Main', new HiddenField('ModulatorID', 'ModulatorID', $this->ID));
-        }
+
+        //     $this->extend('updateCMSFields', $fields);
+        // } else {
+        //     // Existing module state
+        //     $fields = parent::getCMSFields();
+
+        //     // Don't expose Order to the CMS
+        //     $fields->removeFieldFromTab('Root.Main', 'Order');
+        //     $fields->removeFieldFromTab('Root.Main', 'PageID');
+
+        //     // Helps us keep track of preview focus
+        //     $fields->addFieldToTab('Root.Main', new HiddenField('ModulatorID', 'ModulatorID', $this->ID));
+        // }
+
+        $labelField = new TextField('Title', 'Label');
+        $labelField->setDescription('A reference name for this block, not displayed on the website');
+        // $fields->push($labelField);
+        $fields->addFieldToTab('Root.Main', $labelField);
+
+
+        // Don't expose Order to the CMS
+        $fields->removeFieldFromTab('Root.Main', 'Order');
+        $fields->removeFieldFromTab('Root.Main', 'PageID');
+
+        // Helps us keep track of preview focus
+        $fields->addFieldToTab('Root.Main', new HiddenField('ModulatorID', 'ModulatorID', $this->ID));
 
         return $fields;
     }
@@ -179,26 +204,26 @@ class PageModule extends DataObject implements CMSPreviewable
     /**
      * Where the magic happens. Convert the module from the default base class to the chosen type.
      */
-    public function onBeforeWrite()
-    {
-        if ($this->ClassName == PageModule::class && !$this->exists() && !empty($this->NewClassName)) {
-            $instance = $this->newClassInstance($this->NewClassName);
-            $this->ClassName = $this->NewClassName;
+    // public function onBeforeWrite()
+    // {
+    //     if ($this->ClassName == PageModule::class && !$this->exists() && !empty($this->NewClassName)) {
+    //         $instance = $this->newClassInstance($this->NewClassName);
+    //         $this->ClassName = $this->NewClassName;
 
-            // New modules should default to the bottom of the page
-            $this->Order = 1;
+    //         // New modules should default to the bottom of the page
+    //         $this->Order = 1;
 
-            if ($this->Page()->exists()) {
-                $lastModule = $this->Page()->Modules()->sort('Order DESC')->limit(1)->first();
+    //         if ($this->Page()->exists()) {
+    //             $lastModule = $this->Page()->Modules()->sort('Order DESC')->limit(1)->first();
 
-                if ($lastModule) {
-                    $this->Order = $lastModule->Order + 1;
-                }
-            }
-        }
+    //             if ($lastModule) {
+    //                 $this->Order = $lastModule->Order + 1;
+    //             }
+    //         }
+    //     }
 
-        parent::onBeforeWrite();
-    }
+    //     parent::onBeforeWrite();
+    // }
 
     /**
      * Hook to supply module text content to the parent page element for indexing in searches.
@@ -211,11 +236,8 @@ class PageModule extends DataObject implements CMSPreviewable
         return '';
     }
 
-    /**
-     * @return string
-     */
-    public function getSummaryContent()
+    public function NiceType()
     {
-        return '';
+        return FormField::name_to_label($this->obj('ClassName'));
     }
 }

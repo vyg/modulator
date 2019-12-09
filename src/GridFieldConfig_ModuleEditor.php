@@ -16,6 +16,7 @@ use SilverStripe\Forms\GridField\GridFieldDeleteAction;
 use SilverStripe\Forms\GridField\GridFieldFilterHeader;
 use SilverStripe\Forms\GridField\GridFieldToolbarHeader;
 use SilverStripe\Forms\GridField\GridFieldSortableHeader;
+use Symbiote\GridFieldExtensions\GridFieldAddNewMultiClass;
 
 /**
  * Class GridFieldConfig_ModuleEditor.
@@ -27,11 +28,11 @@ class GridFieldConfig_ModuleEditor extends GridFieldConfig
         parent::__construct();
 
         $this->addComponent(new GridFieldButtonRow('before'));
-        $this->addComponent(new GridFieldAddNewButton('buttons-before-left'));
+        // $this->addComponent(new GridFieldAddNewButton('buttons-before-left'));
         $this->addComponent(new GridFieldToolbarHeader());
         $this->addComponent($sort = new GridFieldSortableHeader());
         $this->addComponent($filter = new GridFieldFilterHeader());
-        $this->addComponent(new GridFieldModuleColumns());
+        // $this->addComponent(new GridFieldModuleColumns());
         $this->addComponent(new GridFieldDataColumns());
         $this->addComponent(new GridFieldEditButton());
         $this->addComponent(new GridFieldDeleteAction());
@@ -40,6 +41,7 @@ class GridFieldConfig_ModuleEditor extends GridFieldConfig
         $this->addComponent(new GridFieldPageCount('toolbar-header-right'));
         $this->addComponent($pagination = new GridFieldPaginator($itemsPerPage));
         $this->addComponent(new GridFieldDetailForm());
+        $this->addComponent(new GridFieldAddNewMultiClass());
 
         $sort->setThrowExceptionOnBadDataType(false);
         $filter->setThrowExceptionOnBadDataType(false);
