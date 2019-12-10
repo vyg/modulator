@@ -64,6 +64,7 @@ class ModularPage extends Page
             }
 
             $gridField = new GridField('Modules', 'Content blocks', $this->Modules(), $config);
+            $gridField->addExtraClass('modulator-multiclass');
 
             $fields->addFieldToTab('Root.Main', $gridField, 'Metadata');
         } else {
