@@ -1,5 +1,5 @@
 ---
-name: "Modulator"
+Name: modulator
 ---
 
 Voyage\\Modulator\\ModularPage:
@@ -9,3 +9,4 @@ Voyage\\Modulator\\ModularPage:
 SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest:
   extensions:
     - Voyage\Modulator\GridFieldDetailForm_ItemRequestExtension
+

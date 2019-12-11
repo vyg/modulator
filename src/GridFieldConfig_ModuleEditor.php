@@ -2,7 +2,7 @@
 
 namespace Voyage\Modulator;
 
-use Voyage\Modulator\GridFieldModuleColumns;
+use Voyage\Modulator\GridFieldAddNewMultiClass;
 use SilverStripe\Forms\GridField\GridFieldConfig;
 use SilverStripe\Forms\GridField\GridFieldButtonRow;
 use SilverStripe\Forms\GridField\GridFieldPageCount;
@@ -11,7 +11,6 @@ use SilverStripe\Forms\GridField\GridFieldDetailForm;
 use SilverStripe\Forms\GridField\GridFieldEditButton;
 use SilverStripe\Forms\GridField\GridField_ActionMenu;
 use SilverStripe\Forms\GridField\GridFieldDataColumns;
-use SilverStripe\Forms\GridField\GridFieldAddNewButton;
 use SilverStripe\Forms\GridField\GridFieldDeleteAction;
 use SilverStripe\Forms\GridField\GridFieldFilterHeader;
 use SilverStripe\Forms\GridField\GridFieldToolbarHeader;
@@ -27,11 +26,9 @@ class GridFieldConfig_ModuleEditor extends GridFieldConfig
         parent::__construct();
 
         $this->addComponent(new GridFieldButtonRow('before'));
-        $this->addComponent(new GridFieldAddNewButton('buttons-before-left'));
         $this->addComponent(new GridFieldToolbarHeader());
         $this->addComponent($sort = new GridFieldSortableHeader());
         $this->addComponent($filter = new GridFieldFilterHeader());
-        $this->addComponent(new GridFieldModuleColumns());
         $this->addComponent(new GridFieldDataColumns());
         $this->addComponent(new GridFieldEditButton());
         $this->addComponent(new GridFieldDeleteAction());
@@ -40,6 +37,7 @@ class GridFieldConfig_ModuleEditor extends GridFieldConfig
         $this->addComponent(new GridFieldPageCount('toolbar-header-right'));
         $this->addComponent($pagination = new GridFieldPaginator($itemsPerPage));
         $this->addComponent(new GridFieldDetailForm());
+        $this->addComponent(new GridFieldAddNewMultiClass());
 
         $sort->setThrowExceptionOnBadDataType(false);
         $filter->setThrowExceptionOnBadDataType(false);

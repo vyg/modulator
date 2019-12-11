@@ -10,7 +10,9 @@ use SilverStripe\Core\Config\Config;
 use SilverStripe\Forms\LiteralField;
 use SilverStripe\Forms\GridField\GridField;
 use Voyage\Modulator\GridFieldConfig_ModuleEditor;
+use SilverStripe\Forms\GridField\GridFieldAddNewButton;
 use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
+use Symbiote\GridFieldExtensions\GridFieldAddNewMultiClass;
 
 /**
  * Class ModularPage.
@@ -62,6 +64,7 @@ class ModularPage extends Page
             }
 
             $gridField = new GridField('Modules', 'Content blocks', $this->Modules(), $config);
+            $gridField->addExtraClass('modulator-multiclass');
 
             $fields->addFieldToTab('Root.Main', $gridField, 'Metadata');
         } else {
