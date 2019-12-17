@@ -1,5 +1,9 @@
 <?php
 
+use Voyage\Modulator\PageModule;
+use Voyage\Modulator\ModularPage;
+use SilverStripe\Dev\SapphireTest;
+
 class PageModuleSubclass1 extends PageModule
 {
 }
