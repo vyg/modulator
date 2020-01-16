@@ -59,7 +59,7 @@ class GridFieldDetailForm_ItemRequestExtension extends Extension
         }
 
         // Create a navigator and point it at the parent page
-        $navigator = new SilverStripeNavigator($this->owner->record->Page());
+        $navigator = new SilverStripeNavigator($this->owner->record);
 
         $navField = new LiteralField('SilverStripeNavigator', $navigator->renderWith('SilverStripe\Admin\Includes\LeftAndMain_SilverStripeNavigator'));
         $navField->setAllowHTML(true);
